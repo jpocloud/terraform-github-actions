@@ -8,7 +8,7 @@ terraform {
 
   # Update this block with the location of your terraform state file
   backend "azurerm" {
-    resource_group_name  = "rg-terraform-github-actions-state"
+    resource_group_name  = "TFState"
     storage_account_name = "terraformgithubactions"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
@@ -22,7 +22,35 @@ provider "azurerm" {
 }
 
 # Define any Azure resources to be created here. A simple resource group is shown here as a minimal example.
-resource "azurerm_resource_group" "rg-aks" {
+resource "azurerm_resource_group" "oai_rg" {
   name     = var.resource_group_name
   location = var.location
+}
+
+module "openai" {
+  source              = "Azure/openai/azurerm"
+  version             = "0.1.1"
+  resource_group_name = azurerm_resource_group.oai_rg.name
+  location            = azurerm_resource_group.oai_rg.location
+
+  deployment = {
+    "chat_model" = {
+      name          = "gpt-35-turbo"
+      model_format  = "OpenAI"
+      model_name    = "gpt-35-turbo"
+      model_version = "0301"
+      scale_type    = "Standard"
+    },
+    "embedding_model" = {
+      name          = "text-embedding-ada-002"
+      model_format  = "OpenAI"
+      model_name    = "text-embedding-ada-002"
+      model_version = "2"
+      scale_type    = "Standard"
+    },
+  }
+  depends_on = [
+    azurerm_resource_group.this,
+    module.vnet
+  ]
 }
