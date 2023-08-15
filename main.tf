@@ -50,7 +50,6 @@ module "openai" {
     },
   }
   depends_on = [
-    azurerm_resource_group.this,
-    module.vnet
+    azurerm_resource_group.oai_rg
   ]
 }
