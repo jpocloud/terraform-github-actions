@@ -45,7 +45,7 @@ module "openai" {
       scale_type    = "Standard"
     },
     "embedding_model" = {
-      name          = "ada"
+      name          = "ada-model"
       model_format  = "OpenAI"
       model_name    = "text-embedding-ada-002"
       model_version = "2"
