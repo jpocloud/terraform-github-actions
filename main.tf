@@ -38,7 +38,7 @@ module "openai" {
 
   deployment = {
     "chat_model" = {
-      name          = "gpt-35-turbo"
+      name          = "gpt-35"
       model_format  = "OpenAI"
       model_name    = "gpt-35-turbo"
       model_version = "0301"
