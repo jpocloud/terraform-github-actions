@@ -27,9 +27,12 @@ resource "azurerm_resource_group" "oai_rg" {
   location = var.location
 }
 
+
+# Define an openai resource
 module "openai" {
   source              = "Azure/openai/azurerm"
   version             = "0.1.1"
+  account_name        = "${var.environment}oaitfjpdemo"
   resource_group_name = azurerm_resource_group.oai_rg.name
   location            = azurerm_resource_group.oai_rg.location
 
