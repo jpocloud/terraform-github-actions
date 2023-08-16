@@ -35,7 +35,7 @@ module "openai" {
   account_name        = "${var.environment}oaitfjpdemo"
   resource_group_name = azurerm_resource_group.oai_rg.name
   location            = azurerm_resource_group.oai_rg.location
-
+  public_network_access_enabled = true
   deployment = {
     "chat_model" = {
       name          = "gpt-35"
