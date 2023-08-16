@@ -30,11 +30,11 @@ resource "azurerm_resource_group" "oai_rg" {
 
 # Define an openai resource
 module "openai" {
-  source              = "Azure/openai/azurerm"
-  version             = "0.1.1"
-  account_name        = "${var.environment}oaitfjpdemo"
-  resource_group_name = azurerm_resource_group.oai_rg.name
-  location            = azurerm_resource_group.oai_rg.location
+  source                        = "Azure/openai/azurerm"
+  version                       = "0.1.1"
+  account_name                  = "${var.environment}oaitfjpdemo"
+  resource_group_name           = azurerm_resource_group.oai_rg.name
+  location                      = azurerm_resource_group.oai_rg.location
   public_network_access_enabled = true
   deployment = {
     "chat_model" = {
