@@ -29,30 +29,36 @@ resource "azurerm_resource_group" "oai_rg" {
 
 
 # Define an openai resource
-module "openai" {
-  source                        = "Azure/openai/azurerm"
-  version                       = "0.1.1"
-  account_name                  = "${var.environment}oaitfjpdemo"
-  resource_group_name           = azurerm_resource_group.oai_rg.name
+resource "azurerm_cognitive_account" "example" {
+  name                          = "${var.environment}oaitfjpexample"
   location                      = azurerm_resource_group.oai_rg.location
+  resource_group_name           = azurerm_resource_group.oai_rg.name
+  kind                          = "OpenAI"
+  sku_name                      = "S0"
   public_network_access_enabled = true
-  deployment = {
-    "chat_model" = {
-      name          = "gpt-35"
-      model_format  = "OpenAI"
-      model_name    = "gpt-35-turbo"
-      model_version = "0301"
-      scale_type    = "Standard"
-    },
-    "embedding_model" = {
-      name          = "ada-model"
-      model_format  = "OpenAI"
-      model_name    = "text-embedding-ada-002"
-      model_version = "2"
-      scale_type    = "Standard"
-    },
+  custom_subdomain_name         = "example-openai2"
+
+  #define tags
+  tags = {
+    environment = var.environment
   }
+
   depends_on = [
     azurerm_resource_group.oai_rg
   ]
+}
+
+# define openai deployment
+resource "azurerm_cognitive_deployment" "example" {
+  name                 = "example-cd"
+  cognitive_account_id = azurerm_cognitive_account.example.id
+  model {
+    format  = "OpenAI"
+    name    = "gpt-35-turbo"
+    version = "0301"
+  }
+
+  scale {
+    type = "Standard"
+  }
 }
