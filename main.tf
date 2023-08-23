@@ -36,7 +36,7 @@ resource "azurerm_cognitive_account" "example" {
   kind                          = "OpenAI"
   sku_name                      = "S0"
   public_network_access_enabled = true
-  custom_subdomain_name         = "example-openai2"
+  custom_subdomain_name         = "jpdomain${var.environment}"
 
   #define tags
   tags = {
