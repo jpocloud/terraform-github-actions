@@ -41,7 +41,7 @@ resource "azurerm_cognitive_account" "example" {
   #define tags
   tags = {
     environment = var.environment
-    costcenter  = "11235"
+    costcenter  = "3381"
   }
 
   depends_on = [

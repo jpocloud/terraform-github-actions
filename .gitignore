@@ -36,3 +36,5 @@ terraform.rc
 .terraform.lock.hcl
 
 tfplan
+tfplan-dev
+tf-plan-production
